@@ -14,11 +14,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			characters: [],
-			idCharacter: [],
 			planets: [],
-			idPlanet: [],
-			vehicles: [],
-			idVehicle: [], 
+			starships: [],
 			favorites: []
 		},
 		actions: {
@@ -44,14 +41,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				.catch(error => console.error(error));
 			},
-			getIdCharacters: (id) => {
+			getCharactersById: (id, setCharacter) => {
 				fetch(`https://www.swapi.tech/api/people/${id}`)
 				.then(res => {
 					if (!res.ok) throw Error(res.statusText);
 					return res.json();
 				})
 				.then(response => {
-					setStore({ idCharacter: response.results.properties });
+					setCharacter(response.result);
 				})
 				.catch(error => console.error(error));
 			},
@@ -66,36 +63,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				.catch(error => console.error(error));
 			},
-			getIdPlanets: (id) => {
+			getPlanetsById: (id, setPlanet) => {
 				fetch(`https://www.swapi.tech/api/planets/${id}`)
 				.then(res => {
 					if (!res.ok) throw Error(res.statusText);
 					return res.json();
 				})
 				.then(response => {
-					setStore({ idPlanet: response.results.properties });
+					setPlanet(response.result);
 				})
 				.catch(error => console.error(error));
 			},
-			getInitialVehicles: () => {
+			getInitialStarships: () => {
 				fetch('https://www.swapi.tech/api/starships')
 				.then(res => {
 					if (!res.ok) throw Error(res.statusText);
 					return res.json();
 				})
 				.then(response => {
-					setStore({ vehicles: response.results });
+					setStore({ starships: response.results });
 				})
 				.catch(error => console.error(error));
 			},
-			getIdVehicles: (id) => {
-				fetch(`https://www.swapi.tech/api/vehicles/${id}`)
+			getStarshipsById: (id, setStarship) => {
+				fetch(`https://www.swapi.tech/api/starships/${id}/`)
 				.then(res => {
 					if (!res.ok) throw Error(res.statusText);
 					return res.json();
 				})
 				.then(response => {
-					setStore({ idVehicle: response.results.properties });
+					setStarship(response.result);
 				})
 				.catch(error => console.error(error));
 			},

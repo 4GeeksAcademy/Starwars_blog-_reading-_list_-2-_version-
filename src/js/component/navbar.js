@@ -54,8 +54,8 @@ export const Navbar = () => {
 						<ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
 						{(store.favorites && store.favorites.length > 0) ?
 							store.favorites.map((fav, index) => (
-								<li className="d-flex justify-content-between" key={fav}>
-									<a className="dropdown-item" onClick={() => actions.removeFavorites(index)}>{fav}<i className="fas fa-trash ms-4"></i></a>
+								<li key={fav}>
+									<a className="dropdown-item d-flex justify-content-between" onClick={() => actions.removeFavorites(index)}>{fav}<i className="fas fa-trash mt-1"></i></a>
 								</li>
 							)) : <li className="text-center">(empty)</li>
 						}
