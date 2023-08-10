@@ -9,7 +9,7 @@ export const CharactersCard = (props) => {
     const handleImageError = () => {
         setImageError(true);
     };
-
+    
     return (
         <div className="card p-0 m-3" style={{ width: "17rem" }}>
             <img

@@ -3,6 +3,7 @@ import { CharactersCard } from "../component/charactersCard";
 import { PlanetsCard } from "../component/planetsCard";
 import { StarshipsCard } from "../component/starshipsCard";
 import { Context } from "../store/appContext";
+import { useParams } from "react-router-dom";
 
 export const Main = () => {
     const { store, actions } = useContext(Context);

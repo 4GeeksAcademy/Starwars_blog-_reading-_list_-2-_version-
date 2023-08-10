@@ -14,7 +14,7 @@ export const Starship = (props) => {
             <div className="d-flex flex-row">
                 <div>
                     <img
-                        className="card-img"
+                        className="card-img-top"
                         style={{ width: "30rem" }}
                         onError={handleImageError}
                         src={imageError ? 

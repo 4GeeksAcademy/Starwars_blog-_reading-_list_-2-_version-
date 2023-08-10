@@ -13,7 +13,7 @@ export const Navbar = () => {
 		setInput(value);
 		if (value.trim() === '') {
 			setAutocompleteData([]);
-			setShowAutocomplete(false); // Hide the autocomplete dropdown when input is empty
+			setShowAutocomplete(true); // Hide the autocomplete dropdown when input is empty
 		}
 
 		fetch(`https://www.swapi.tech/api/people?name=${value}`)
@@ -26,7 +26,7 @@ export const Navbar = () => {
 		.then(responseAsJson => {
 			console.log(responseAsJson)
 			
-			if (responseAsJson && responseAsJson.results && responseAsJson.results > 0) {
+			if (value && responseAsJson && responseAsJson.results && responseAsJson.results > 0) {
 				setAutocompleteData(responseAsJson.results.filter(result => result.name.toLowerCase().includes(value.toLowerCase())).map(result => result.name));
 				setShowAutocomplete(true); // Show the autocomplete dropdown when there are suggestions
 			}
@@ -43,6 +43,7 @@ export const Navbar = () => {
 
 	const handleKeyDown = (event) => {
 		if (event.key === 'Enter') {
+			event.preventDefault(); // 👈️ prevent page refresh
 			// Your code to handle the "Enter" key press 
 			// let's just clear the input
 			setInput('');
