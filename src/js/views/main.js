@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext, useEffect} from "react";
 import { CharactersCard } from "../component/charactersCard";
 import { PlanetsCard } from "../component/planetsCard";
 import { StarshipsCard } from "../component/starshipsCard";
@@ -7,6 +7,26 @@ import { useParams } from "react-router-dom";
 
 export const Main = () => {
     const { store, actions } = useContext(Context);
+    const params = useParams();
+    const [character, setCharacter] = useState();
+    const [planet, setPlanet] = useState();
+    const [starship, setStarship] = useState();
+
+   useEffect(() => {
+    if (params.uid && params.entities === "characters") {
+        actions.getCharactersById(params.uid);
+    } }, []);
+
+    useEffect(() => {
+    if (params.uid && params.entities === "planets") {
+        actions.getPlanetsById(params.uid);
+    }}, []);
+
+    useEffect(() => {
+        if (params.uid && params.entities === "starships") {
+        actions.getStarshipsById(params.uid);
+    }
+    }, []);
     
     return (
         <div className="container">

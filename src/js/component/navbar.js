@@ -8,33 +8,40 @@ export const Navbar = () => {
 	const [input, setInput] = useState('');
 	const [autocompleteData, setAutocompleteData] = useState([]);
 	const [showAutocomplete, setShowAutocomplete] = useState(false); // New state for showing/hiding the autocomplete dropdown
+	const [combinedAutocompleteData, setCombinedAutocompleteData] = useState([]);
 
-	const handleChange = (value) => {
-		setInput(value);
-		if (value.trim() === '') {
-			setAutocompleteData([]);
-			setShowAutocomplete(true); // Hide the autocomplete dropdown when input is empty
-		}
+  const handleChange = (value) => {
+    setInput(value);
+    if (value.trim() === '') {
+      setCombinedAutocompleteData([]); // Clear the autocomplete data
+      setShowAutocomplete(false); // Hide the autocomplete dropdown when input is empty
+    }
 
-		fetch(`https://www.swapi.tech/api/people?name=${value}`)
-		.then(response => {
-			if (!response.ok) {
-				throw Error(response.statusText);
-			}
-			return response.json(); // Parse the response JSON
+		// Fetch characters and planets data
+    	const fetchCharacters = fetch(`https://www.swapi.tech/api/people?`);
+    	const fetchPlanets = fetch(`https://www.swapi.tech/api/planets?`);
+
+		// Combine results from both fetches
+		Promise.all([fetchCharacters, fetchPlanets])
+		.then((responses) => Promise.all(responses.map((response) => response.json())))
+		.then(([charactersData, planetsData]) => {
+		  const combinedData = [
+			...charactersData.results.filter((result) =>
+			  result.name.toLowerCase().includes(value.toLowerCase())
+			),
+			...planetsData.results.filter((result) =>
+			  result.name.toLowerCase().includes(value.toLowerCase())
+			),
+		  ];
+		  setCombinedAutocompleteData(
+			combinedData.map((result) => result.name)
+		  );
+		  setShowAutocomplete(true); // Show the autocomplete dropdown when there are suggestions
 		})
-		.then(responseAsJson => {
-			console.log(responseAsJson)
-			
-			if (value && responseAsJson && responseAsJson.results && responseAsJson.results > 0) {
-				setAutocompleteData(responseAsJson.results.filter(result => result.name.toLowerCase().includes(value.toLowerCase())).map(result => result.name));
-				setShowAutocomplete(true); // Show the autocomplete dropdown when there are suggestions
-			}
-		})
-		.catch(error => {
-			console.log('Looks like there was a problem: \n', error);
+		.catch((error) => {
+		  console.log('Looks like there was a problem: \n', error);
 		});
-	}
+	};
 
 	const handleSelectAutocomplete = (selectedItem) => {
 		setInput(selectedItem);
@@ -75,14 +82,14 @@ export const Navbar = () => {
 								placeholder="Search by name"
 								onKeyDown={handleKeyDown}
 							/>
-							{showAutocomplete && autocompleteData.length > 0 && (
-								<ul className="autocomplete-list">
-									{autocompleteData.map((item, index) => (
+								{showAutocomplete && combinedAutocompleteData.length > 0 && (
+									<ul className="autocomplete-list list-unstyled">
+									{combinedAutocompleteData.map((item, index) => (
 										<li
-											key={index}
-											onClick={() => handleSelectAutocomplete(item)} // Handle selection
+										key={index}
+										onClick={() => handleSelectAutocomplete(item)} // Handle selection
 										>
-											{item}
+										{item}
 										</li>
 									))}
 								</ul>
