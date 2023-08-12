@@ -64,17 +64,17 @@ export const Navbar = () => {
 				<Link to="/">
 					<img src={logo} style={{ width: "100px" }} alt="star wars logo" />
 				</Link>
-				<div className="ml-auto">
-					<form className="input-group mb-3">
+				<div className="d-flex flex-row">
+					<form className="input-group me-3">
 						<div className="input-group-prepend">
 							<div>
-								<span className="input-group-text" style={{ height: "1.9rem" }} id="basic-addon1"><i className="fas fa-search"></i></span>
+								<span className="input-group-text" style={{ height: "2.5rem" }} id="basic-addon1"><i className="fas fa-search"></i></span>
 							</div>
 						</div>
 						{/* Autocomplete dropdown */}
 						<div>
 							<input
-								style={{ height: "1.9rem" }}
+								style={{ height: "2.5rem" }}
 								type="text"
 								className="form-control"
 								value={input}
@@ -96,6 +96,7 @@ export const Navbar = () => {
 							)}
 						</div>
 							</form>
+							
 					<div className="dropdown">
 						<button className="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 							Favorites <span className="badge bg-secondary">{store.favorites.length}</span>
@@ -109,7 +110,7 @@ export const Navbar = () => {
 							)) : <li className="text-center">(empty)</li>
 						}
 						</ul>
-					</div>
+				</div>
 				</div>
 			</nav>
 		</div>
