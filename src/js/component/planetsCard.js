@@ -1,15 +1,30 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
 export const PlanetsCard = (props) => {
     const { store, actions } = useContext(Context);
     const [imageError, setImageError] = useState(false);
+    const [planetsInformation, setPlanetsInformation] = useState(null);
 
     const handleImageError = () => {
         setImageError(true);
     };
 
+    useEffect(() => {
+        //fetch(props.entities.url)
+        fetch(`https://www.swapi.tech/api/planets/${props.entities.uid}`)
+            .then(res => {
+                if (!res.ok) throw Error(res.statusText);
+                return res.json();
+            })
+            .then(response => {
+                setPlanetsInformation(response.result);
+            })
+            .catch(error => console.error(error));
+
+        console.log(planetsInformation);
+    },  [props.entities]);
 
 	return (
         
@@ -26,8 +41,13 @@ export const PlanetsCard = (props) => {
                         <h5 className="card-title">{props.entities.name}</h5>
                     <div className="container d-flex row">
                         <div className="lh-base">
-                            <p className="m-0">Population: {props.entities.population}</p>
-                            <p className="m-0">Terrain: {props.entities.terrain}</p>
+                            {planetsInformation ?  (
+                                <div>
+                                    <p className="m-0">Population: {planetsInformation.properties.population}</p>
+                                    <p className="m-0">Terrain: {planetsInformation.properties.terrain}</p>
+                                </div>
+                             )
+                            : ""}
                         </div>
                         <div className="d-flex justify-content-between mt-5">
                             <Link to={"/details/" + props.entity + "/" + props.entities.uid}>

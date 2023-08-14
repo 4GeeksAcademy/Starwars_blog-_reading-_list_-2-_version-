@@ -1,14 +1,29 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
 export const CharactersCard = (props) => {
     const { store, actions } = useContext(Context);
     const [imageError, setImageError] = useState(false);
+    const [characterInformation, setCharacterInformation] = useState(null);
 
     const handleImageError = () => {
         setImageError(true);
     };
+
+    useEffect(() => {
+        fetch(`https://www.swapi.tech/api/people/${props.entities.uid}`)
+            .then(res => {
+                if (!res.ok) throw Error(res.statusText);
+                return res.json();
+            })
+            .then(response => {
+                setCharacterInformation(response.result);
+            })
+            .catch(error => console.error(error));
+
+        console.log(characterInformation);
+    },  [props.entities]);
     
     return (
         <div className="card p-0 m-3" style={{ width: "17rem" }}>
@@ -23,10 +38,15 @@ export const CharactersCard = (props) => {
             <div className="card-body">
                 <h5 className="card-title">{props.entities.name}</h5>
                 <div className="container d-flex row">
-                    <div>
-                        <p className="m-0">Gender: {props.entities.gender}</p>
-                        <p className="m-0">Hair Color: {props.entities.hair_color}</p>
-                        <p className="m-0">Eye Color: {props.entities.eye_color}</p>
+                <div>
+                    {characterInformation ?  (
+                        <div>
+                            <p className="m-0">Gender: {characterInformation.properties.gender}</p>
+                            <p className="m-0">Hair Color: {characterInformation.properties.hair_color}</p>
+                            <p className="m-0">Eye Color: {characterInformation.eye_color}</p>
+                        </div>
+                    )
+                        : ""}
                     </div>
                     <div className="d-flex justify-content-between mt-5">
                         <Link to={"/details/" + props.entity + "/" + props.entities.uid}>
