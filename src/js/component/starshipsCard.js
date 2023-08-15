@@ -13,7 +13,7 @@ export const StarshipsCard = (props) => {
 
     useEffect(() => {
         //fetch(props.entities.url)
-        fetch(`https://www.swapi.tech/api/starship/${props.entities.uid}`)
+        fetch(`https://www.swapi.tech/api/starships/${props.entities.uid}`)
             .then(res => {
                 if (!res.ok) throw Error(res.statusText);
                 return res.json();
@@ -43,8 +43,8 @@ export const StarshipsCard = (props) => {
                         <div >
                         {starshipsInformation ?  (
                                 <div>
-                            <p className="m-0">Model: {starshipsInformation.entities.properties.model}</p>
-                            <p className="m-0">Manufacturer: {starshipsInformation.entities.properties.manufacturer}</p>
+                            <p className="m-0">Model: {starshipsInformation.properties.model}</p>
+                            <p className="m-0">Manufacturer: {starshipsInformation.properties.manufacturer}</p>
                             </div>
                              )
                             : ""}

@@ -6,7 +6,6 @@ import logo from "../../img/Lego_Star_Wars_42.png";
 export const Navbar = () => {
 	const { store, actions } = useContext(Context);
 	const [input, setInput] = useState('');
-	const [autocompleteData, setAutocompleteData] = useState([]);
 	const [showAutocomplete, setShowAutocomplete] = useState(false); // New state for showing/hiding the autocomplete dropdown
 	const [combinedAutocompleteData, setCombinedAutocompleteData] = useState([]);
 
