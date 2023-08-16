@@ -42,20 +42,21 @@ export const Navbar = () => {
 		});
 	};
 
+	const selectedItemType = (selectedItem) => {
+		if (selectedItem && selectedItem.toLowerCase().includes("people")) {
+		  return "characters";
+		} else {
+		  return "planets";
+		}
+	  };
+
 	const handleSelectAutocomplete = (selectedItem) => {
 		setInput(selectedItem);
 		setShowAutocomplete(false); // Hide the autocomplete dropdown when a suggestion is selected
+		setInput('');
+		setShowAutocomplete(false);
 	}
 
-	const handleKeyDown = (event) => {
-		if (event.key === 'Enter') {
-			event.preventDefault(); // 👈️ prevent page refresh
-			// Your code to handle the "Enter" key press 
-			// let's just clear the input
-			setInput('');
-			setShowAutocomplete(false);
-		}
-	}
 
 	return (
 		<div className="container-fluid navbar-light bg-light">
@@ -79,17 +80,18 @@ export const Navbar = () => {
 								value={input}
 								onChange={(e) => handleChange(e.target.value)}
 								placeholder="Search by name"
-								onKeyDown={handleKeyDown}
 							/>
 								{showAutocomplete && combinedAutocompleteData.length > 0 && (
 									<ul className="autocomplete-list list-unstyled">
 									{combinedAutocompleteData.map((item, index) => (
-										<li
-										key={index}
-										onClick={() => handleSelectAutocomplete(item)} // Handle selection
-										>
-										{item}
-										</li>
+										<Link to={`/details/${selectedItemType(item)}/${index}`}>
+											<li
+											key={index}
+											onClick={() => handleSelectAutocomplete(item)} // Handle selection
+											>
+											{item}
+											</li>
+										</Link>
 									))}
 								</ul>
 							)}
