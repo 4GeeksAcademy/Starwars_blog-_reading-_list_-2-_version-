@@ -12,7 +12,6 @@ export const PlanetsCard = (props) => {
     };
 
     useEffect(() => {
-        //fetch(props.entities.url)
         fetch(`https://www.swapi.tech/api/planets/${props.entities.uid}`)
             .then(res => {
                 if (!res.ok) throw Error(res.statusText);

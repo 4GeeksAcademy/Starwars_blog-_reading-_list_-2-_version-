@@ -43,7 +43,7 @@ export const CharactersCard = (props) => {
                         <div>
                             <p className="m-0">Gender: {characterInformation.properties.gender}</p>
                             <p className="m-0">Hair Color: {characterInformation.properties.hair_color}</p>
-                            <p className="m-0">Eye Color: {characterInformation.eye_color}</p>
+                            <p className="m-0">Eye Color: {characterInformation.properties.eye_color}</p>
                         </div>
                     )
                         : ""}

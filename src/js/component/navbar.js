@@ -33,6 +33,7 @@ export const Navbar = () => {
             ),
           ];
           setCombinedAutocompleteData(combinedData);
+          console.log(combinedData)
           setShowAutocomplete(true);
         })
         .catch((error) => {
