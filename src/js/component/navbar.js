@@ -48,10 +48,10 @@ export const Navbar = () => {
       : "planets";
   };
 
-  const handleSelectAutocomplete = (index, selectedItem) => {
+  const handleSelectAutocomplete = (selectedItem) => {
     setInput(selectedItem.name);
     setShowAutocomplete(false);
-    navigate(`/details/${selectedItemType(selectedItem)}/${index}`);
+    navigate(`/details/${selectedItemType(selectedItem)}/${selectedItem.uid}`);
   };
 
   return (
@@ -88,7 +88,7 @@ export const Navbar = () => {
                     <li
                       key={index}
                       onClick={() =>
-                        handleSelectAutocomplete(index, item)
+                        handleSelectAutocomplete(item)
                       }
                     >
                       {item.name}
