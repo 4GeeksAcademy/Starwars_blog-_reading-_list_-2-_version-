@@ -6,7 +6,7 @@ import { Context } from "../store/appContext";
 import { useParams } from "react-router-dom";
 
 export const Details = () => {
-    const { actions } = useContext(Context);
+    const { store, actions } = useContext(Context);
     const params = useParams();
     const [character, setCharacter] = useState();
     const [planet, setPlanet] = useState();
@@ -15,18 +15,18 @@ export const Details = () => {
    useEffect(() => {
     if (params.uid && params.entities === "characters") {
         actions.getCharactersById(params.uid, setCharacter);
-    } }, []);
+    } }, [params]);
 
     useEffect(() => {
     if (params.uid && params.entities === "planets") {
         actions.getPlanetsById(params.uid, setPlanet);
-    }}, []);
+    }}, [params]);
 
     useEffect(() => {
         if (params.uid && params.entities === "starships") {
         actions.getStarshipsById(params.uid, setStarship);
     }
-    }, []);
+    }, [params]);
 
 
     return (

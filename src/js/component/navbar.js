@@ -51,6 +51,7 @@ export const Navbar = () => {
   const handleSelectAutocomplete = (selectedItem) => {
     setInput(selectedItem.name);
     setShowAutocomplete(false);
+    console.log(`/details/${selectedItemType(selectedItem)}/${selectedItem.uid}`)
     navigate(`/details/${selectedItemType(selectedItem)}/${selectedItem.uid}`);
   };
 
@@ -87,9 +88,7 @@ export const Navbar = () => {
                   {combinedAutocompleteData.map((item, index) => (
                     <li
                       key={index}
-                      onClick={() =>
-                        handleSelectAutocomplete(item)
-                      }
+                      onClick={() => handleSelectAutocomplete(item)}
                     >
                       {item.name}
                     </li>
